@@ -21,7 +21,14 @@ import {
   import StudentAdmissionform from './Studentform';
   import ChartTwo from './ChartTwo';
   import Excelupload from './excelupload';
+  import Cookies from 'universal-cookie';
+  import { Navigate } from 'react-router-dom';
 export default function Studentadmissionform() {
+  const cookies = new Cookies();
+  const auth=cookies.get('_UID');
+ if(!auth){
+   return <Navigate to='/signin'/>
+ }
     const data = [
         {
           label: "Form",
