@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
+import Cookies from 'universal-cookie';
+import { Navigate } from 'react-router-dom';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -54,7 +56,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       document.querySelector('body')?.classList.remove('sidebar-expanded');
     }
   }, [sidebarExpanded]);
-
+  const cookies = new Cookies();
+  const auth=cookies.get('_UID');
+ if(!auth){
+   return <Navigate to='/signin'/>
+ }
   return (
     <aside
       ref={sidebar}
