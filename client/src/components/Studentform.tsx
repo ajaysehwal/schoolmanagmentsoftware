@@ -5,9 +5,10 @@ import {
   IconButton
 } from '@material-tailwind/react';
 
-import { Link } from 'react-router-dom';
-import { Select, Option } from '@material-tailwind/react';
-import {useState} from "react";
+import { Link,Navigate } from 'react-router-dom';
+import {useEffect, useState} from "react";
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 export default function StudentAdmissionform() {
   interface studentdata{
     Allstudentdata:{
@@ -23,6 +24,7 @@ export default function StudentAdmissionform() {
     religion:string;
     city:string;
     phone:number;
+    parents_phone:number;
     previous_school_name:string;
     class_in_which_was_studing:string;
     email:string;
@@ -35,7 +37,7 @@ export default function StudentAdmissionform() {
     state:string;
     blood_group:string;
     dateofleaving:string;
-    student_docuemnt:string;
+    student_document:string;
     birth_certificate:string;
     student_image:string;
     additional_information:string;
@@ -56,6 +58,7 @@ export default function StudentAdmissionform() {
       religion:"",
       city:"",
       phone:0,
+      parents_phone:0,
       previous_school_name:"",
       class_in_which_was_studing:"",
       email:"",
@@ -68,7 +71,7 @@ export default function StudentAdmissionform() {
       state:"",
       blood_group:"",
       dateofleaving:"",
-      student_docuemnt:"",
+      student_document:"",
       birth_certificate:"",
       student_image:"",
       additional_information:"",
@@ -76,19 +79,71 @@ export default function StudentAdmissionform() {
       }
   })
 
-  const handlechange=(e)=>{
+  const handlechange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setdata({
       Allstudentdata:{
         ...data.Allstudentdata,
         [e.target.name]:e.target.value,
       }
      })
+     
   }
  const handlesubmit=(e:React.FormEvent<HTMLFormElement>)=>{
    e.preventDefault();
-
+   const formdata=data.Allstudentdata;
+         poststudentdata(formdata) 
+ }
+ const poststudentdata=async(formdata:any)=>{
+  setload(true)
+  try{
+      const res=await axios.post('http://localhost:8000/apistudents',formdata);
+            
+         console.log(res.data);
+         getclasses(verified_token);
+         setload(false);
+    }catch(err){
+      setload(true);
+     
+       console.log("error",err);
+    }
  }
  console.log(data);
+ const cookies = new Cookies();
+ const auth=cookies.get('_UID');
+ if(!auth){
+   return <Navigate to='/signin'/>
+ }
+ const verified_token = cookies.get('_UID');
+ const [load,setload]=useState(false);
+ const [get,getdata]=useState([])
+ const [gethouses,setgethouse]=useState([]);
+ const getclasses=async(token:any)=>{
+  setload(true)
+  try{
+    const res=await axios.get(`http://localhost:8000/studentclasses/${token}`);
+      getdata(res.data);
+        
+    setload(false);
+  }catch(err){
+    setload(true);
+     console.log("error",err);
+  }
+}
+const gethouse=async(token:any)=>{
+  setload(true)
+  try{
+    const res=await axios.get(`http://localhost:8000/api.studenthouses/${token}`);
+       setgethouse(res.data);
+    setload(false);
+  }catch(err){
+    setload(true);
+     console.log("error",err);
+  }
+}
+useEffect(()=>{
+  getclasses(verified_token)
+  gethouse(verified_token);
+},[]);
   return (
     <Card
       style={{ padding: '20px' }}
@@ -97,6 +152,7 @@ export default function StudentAdmissionform() {
       shadow={false}
     >
       <form
+        encType="multipart/form-data"
       onSubmit={handlesubmit}
         className="mt-8 mb-2 max-w-screen-lg sm:w-96"
         style={{ width: '100%', margin: 'auto' }}
@@ -105,35 +161,44 @@ export default function StudentAdmissionform() {
           
           className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          <Input size="lg" label="Full Name" name='student_name' onChange={handlechange} />
-          <Input size="lg" label="Birthday" type="date" name='date_of_birth' onChange={handlechange} />
-          <Input size="lg" label="Father name / Parent" type="text"  name='father_name' onChange={handlechange}/>
-          <Input size="lg" label="Mother name / Parent" type="text" name='mother_name'onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input'  size="lg" label="Full Name" name='student_name' onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Birthday" type="date" name='date_of_birth' onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Father name / Parent" type="text"  name='father_name' onChange={handlechange}/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Mother name / Parent" type="text" name='mother_name'onChange={handlechange} />
 
-          <Input size="lg" label="Mother tougue"  name='mother_tougue' type='text' onChange={handlechange} />
-          <Input size="lg" label="Address" type='text' onChange={handlechange} name='address' />
-          <Input size="lg" label="Nationality" type='text' onChange={handlechange} name='nationality'/>
-          <Input size="lg" label="Admission no" type="number" onChange={handlechange} name='admission_no' />
-          <Input size="lg" label="Age" type="number" onChange={handlechange} name='age'  />
-          <Input size="lg" label="Religion" type='text' onChange={handlechange} name='religion' />
-          <Input size="lg" label="City" type='text' onChange={handlechange} name='city' />
-          <Input size="lg" label="Phone" type='number' onChange={handlechange} name='phone'/>
-          <Input size="lg" label="Previous school name" type='text' onChange={handlechange} name='previous_school_name'/>
-          <Input size="lg" label="Class in which was studing"  name='class_in_which_was_studing' type='text' onChange={handlechange}  />
-          <Input size="lg" label="Email" type='email' onChange={handlechange} name='email' />
-          <Select variant="outlined" name='transfer_certificate' label="Transfer certificate" onChange={handlechange}>
-            <Option value='Yes'>Yes</Option>
-            <Option value='No'>No</Option>
-          </Select>
-          <Select variant="outlined" label="Physical handicap" name='physical_handicap' onChange={handlechange}>
-            <Option value='Yes'>Yes</Option>
-            <Option value="No">No</Option>
-          </Select>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Mother tougue"  name='mother_tougue' type='text' onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Address" type='text' onChange={handlechange} name='address' />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input'  size="lg" label="Nationality" type='text' onChange={handlechange} name='nationality'/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Admission no" type="number" onChange={handlechange} name='admission_no' />
+          <Input  className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Age" type="number" onChange={handlechange} name='age'  />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Religion" type='text' onChange={handlechange} name='religion' />
+          <Input  className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="City" type='text' onChange={handlechange} name='city' />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Phone" type='number' onChange={handlechange} name='phone'/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Parent Phone" type='number' onChange={handlechange} name='parents_phone'/>
+
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Previous school name" type='text' onChange={handlechange} name='previous_school_name'/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Class in which was studing"  name='class_in_which_was_studing' type='text' onChange={handlechange}  />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Email" type='email' onChange={handlechange} name='email' />
+          <select style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary' name='transfer_certificate' onChange={handlechange}>
+            <option value="">Transfer certificate</option>
+            <option value='Yes'>Yes</option>
+            <option value='No'>No</option>
+          </select>
+          <select  style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary' name='physical_handicap' onChange={handlechange}>
+            <option value="">Physical Handicap</option>
+            <option value='Yes'>Yes</option>
+            <option value="No">No</option>
+          </select>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Select variant="outlined" size="lg" name='house'  label="Select House" onChange={handlechange}>
-            <Option value='Yes'>Yes</Option>
-            <Option value='Yes'>No</Option>
-          </Select>
+          <select style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary' name='house'  onChange={handlechange}>
+            <option value="">Select House</option>
+            {gethouses?.map((el)=>(
+                    
+                    <option value={el.house_name}>{el.house_name}</option>
+                   
+                 
+               ))}
+          </select>
           <Link to='/studenthouses'>
           <IconButton className="rounded-full" fullWidth>
             <svg
@@ -153,15 +218,22 @@ export default function StudentAdmissionform() {
           </IconButton></Link>
          
         </div>
-          <Select variant="outlined" name='house' label="Student category" onChange={handlechange}>
-            <Option value='Yes'>Yes</Option>
-            <Option value='No'>No</Option>
-          </Select>
+          <select  name='student_category' style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary' onChange={handlechange}>
+            <option value="">Student Category</option>
+            <option value='Yes'>Yes</option>
+            <option value='No'>No</option>
+          </select>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Select variant="outlined" size="lg" name='select_class'  label="Select class" onChange={handlechange}>
-            <Option value="Yes">Yes</Option>
-            <Option value='No'>No</Option>
-          </Select>
+          <select style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'  name='select_class'  onChange={handlechange}>
+             <option value="">Select Class</option>
+                 {get?.map((el)=>(
+                    
+                      <option value={el.class_name}>{el.class_name}</option>
+                     
+                   
+                 ))}
+        
+          </select>
           <Link to='/studentclasses'>
           <IconButton className="rounded-full" fullWidth>
             <svg
@@ -182,19 +254,20 @@ export default function StudentAdmissionform() {
           </Link>
         
         </div>
-          <Input size="lg" label="Place birth" name="place_birth" type='text'  onChange={handlechange} />
-          <Input size="lg" label="State" type='text'  onChange={handlechange} name='state' />
-          <Input size="lg" label="Blood group" type='text'  onChange={handlechange} name='blood_group' />
-          <Input size="lg" label="Date of Leaving" type="date"  onChange={handlechange} name='dateofleaving' />
-          <Input size="lg" label="Student Document" type="file"  onChange={handlechange} name='student_document'/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Place birth" name="place_birth" type='text'  onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="State" type='text'  onChange={handlechange} name='state' />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Blood group" type='text'  onChange={handlechange} name='blood_group' />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Date of Leaving" type="date"  onChange={handlechange} name='dateofleaving' />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Student Document" type="file"  onChange={handlechange} name='student_document'/>
 
-          <Select variant="outlined" label="Bith certificate"  onChange={handlechange} name='birth_certificate'>
-            <Option value="Yes">Yes</Option>
-            <Option value="No">No</Option>
-          </Select>
-          <Input size="lg" label="Other Document" type="file" name='other_document'  onChange={handlechange}/>
-          <Input size="lg" label="Student Image" type='file' name='student_image'  onChange={handlechange} />
-          <Input size="lg" label="Additional Information" type='text' name='additional_information'  onChange={handlechange} />
+          <select style={{border:'1px solid rgb(176,190,197)'}} className='w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'  onChange={handlechange} name='birth_certificate'>
+            <option value="">Birth Certificate</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Other Document" type="file" name='other_document' multiple  onChange={handlechange}/>
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Student Image" type='file' name='student_image'  multiple onChange={handlechange} />
+          <Input className='w-full rounded-lg bg-transparent py-2 pl-6 pr-10 outline-none focus-visible:shadow-none dark:bg-form-input' size="lg" label="Additional Information" type='text' name='additional_information'  onChange={handlechange} />
 
           
         </div>
