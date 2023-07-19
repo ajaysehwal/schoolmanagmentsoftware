@@ -16,6 +16,7 @@ export default function AddClasses() {
   }
   const verified_token = cookies.get('_UID');
   const [load,setload]=useState(false);
+  const 
   const [classdata,setclasses]=useState([]);
   const [finaldata,setfinaldata]=useState([]);
   const notify = (text: string) =>
