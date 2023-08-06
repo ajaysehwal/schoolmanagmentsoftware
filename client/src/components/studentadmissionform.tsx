@@ -36,12 +36,7 @@ export default function Studentadmissionform() {
           icon: UserPlusIcon,
           desc: <StudentAdmissionform/>
         },
-        {
-          label: "Profile",
-          value: "profile",
-          icon: UserCircleIcon,
-          desc: <ChartTwo/>
-        },
+    
         {
           label: "Excel",
           value: "Excel",
