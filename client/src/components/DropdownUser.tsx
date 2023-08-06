@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { Spinner } from "@material-tailwind/react";
 
-import UserOne from '../images/user/user-01.png';
+import axios from 'axios';
 
 const DropdownUser = () => {
+  const [name,setname]=useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [load,setload]=useState(false);
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -25,7 +28,6 @@ const DropdownUser = () => {
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -35,6 +37,29 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  const userdata=async(Uid:any)=>{
+      setload(true);
+    try{
+      setload(true);
+
+      const admindata=await axios.get(`http://localhost:8000/admindata/${Uid}`);
+      const schooldata=await axios.get(`http://localhost:8000/apisignup/${Uid}`);
+       const admin_data=admindata.data[0];
+       setname(admin_data.admin_name);
+       const school_data=schooldata.data[0];
+       console.log(admin_data);
+       console.log(school_data);
+       setload(false);
+
+    }catch(err){
+      console.log("Error",err);
+    }
+  }
+  const cookies =new Cookies();
+   const user_id= cookies.get('_UID');
+  useEffect(()=>{
+    userdata(user_id);
+  },[])
   return (
     <div className="relative">
       <Link
@@ -45,13 +70,21 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+           {load?(
+                 <Spinner className="h-4 w-4"/>
+
+           ):(
+            name
+           )}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">Admin</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <svg className="h-10 w-10"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+</svg>
+
         </span>
 
         <svg
