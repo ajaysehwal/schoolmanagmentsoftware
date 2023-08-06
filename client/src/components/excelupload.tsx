@@ -8,14 +8,80 @@ import {
   Option,
   Typography,
 } from '@material-tailwind/react';
-import { IconButton } from '@material-tailwind/react';
+import { ToastContainer, toast } from 'react-toastify';
 
+import { useForm } from 'react-hook-form';
+
+import { useState } from 'react';
+import { IconButton } from '@material-tailwind/react';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 export default function Excelupload() {
+  const [selectedFile1, setSelectedFile1] = useState<File | null>(null);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const successnotify = (text: string) =>
+  toast.success(text, {
+    position: 'bottom-center',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+  });
+  const notify = (text: string) =>
+  toast.error(text, {
+    position:'bottom-center',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+  });
+  const cookies = new Cookies();
+  const auth=cookies.get('_UID');
+ 
+  const handleFileChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile1(event.target.files[0]);
+    }
+  };
+          const Onsubmit=(data:any)=>{
+           
+             if(selectedFile1){
+              const formData=new FormData();
+               formData.append('file',selectedFile1);
+               formData.append('admin_token',auth);
+                  postexcelfile(formData);
+             }else{
+                notify("Please Upload Excel File Only")
+             }
+           
+          }
+          const postexcelfile=async(data:any)=>{
+             try{
+              const res=await axios.post('http://localhost:8000/apiexceldata',data,{
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              });
+               console.log(res.data)
+             }catch(err){
+               notify('Please Upload Excel File Only');
+              return err;
+             }
+          }
   return (
     <div>
-      <form action="" style={{ display: 'grid', gap: '10px' }}>
+      {/*  */}
+      <form  style={{ display: 'grid', gap: '10px' }} method="post" encType="multipart/form-data" onSubmit={handleSubmit(Onsubmit)}>
+      <ToastContainer></ToastContainer>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Select variant="outlined" label="Select class">
+          
+          <Select variant="outlined" label="Select class"  {...register('class') }>
             <Option>Yes</Option>
             <Option>No</Option>
           </Select>
@@ -37,7 +103,7 @@ export default function Excelupload() {
           </IconButton>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Select variant="outlined" label="Select section">
+          <Select variant="outlined" label="Select section"  {...register('section') } >
             <Option>Yes</Option>
             <Option>No</Option>
           </Select>
@@ -58,8 +124,8 @@ export default function Excelupload() {
             </svg>
           </IconButton>
         </div>
+        <Input  size="lg" label="Select excel file only"  name='file' type="file" onChange={handleFileChange1} />
 
-        <Input size="lg" label="Select excel file" type="file" />
         <Button
           type="submit"
           className="mt-6"
@@ -90,5 +156,6 @@ export default function Excelupload() {
         </Button>
       </form>
     </div>
+ 
   );
 }
