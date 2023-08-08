@@ -35,6 +35,7 @@ const Createsubject=lazy(()=>import('./components/createsubject'));
 const Teacherdetailpage=lazy(()=>import('./components/teacherdetailpage'));
 const AddSchoolHoilday=lazy(()=>import('./components/AddSchoolholiday'));
 const Teachertimetable=lazy(()=>import('./components/teachertimetable'));
+const Managestudentfees=lazy(()=>import('./components/managestudentfees'));
 function App() {
  
   const [loading, setLoading] = useState<boolean>(true);
@@ -79,6 +80,14 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <Studentadmissionform />
+              </Suspense>
+            }
+          />
+            <Route
+            path="/students/detailtable/managestudentfees/:id"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Managestudentfees />
               </Suspense>
             }
           />
