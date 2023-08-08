@@ -120,6 +120,8 @@ import {
         color="transparent"
         shadow={false}
       >
+               <p style={{textAlign:'center',marginBottom:'30px'}} className='text-2xl font-bold'>Register New Teacher</p>
+
           <ToastContainer></ToastContainer>
          {/* <Link to='/teacherstable'>
         
