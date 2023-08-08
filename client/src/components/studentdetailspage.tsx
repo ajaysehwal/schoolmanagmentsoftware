@@ -11,7 +11,7 @@ import axios from 'axios';
 
 export default function Studentdetailspage() {
   interface RouteParams {
-    paramName: string;
+    id: string;
   }  
   const { id } = useParams<RouteParams>();
 
