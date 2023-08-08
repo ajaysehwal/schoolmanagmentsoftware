@@ -142,7 +142,8 @@ export default function Studentdetailtable() {
   return (
     <div>
          <div  className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"  style={{width:'100%',marginBottom:'10px',display:'flex',alignItems:'center',justifySelf:'center',gap:'10px',padding:'20px'}} >
-        <select  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"  {...register('class',{onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{
+        <select  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"  
+        {...register('class',{onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{
                    getsectionbyclass(e.target.value,auth);}}) } >
             <option value="">Select Class</option>
 
