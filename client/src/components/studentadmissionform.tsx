@@ -46,7 +46,7 @@ export default function Studentadmissionform() {
       ];
   return (
     <div>
-        <Tabs  className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4" value="dashboard">
+        <Tabs  className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4" value="Form">
       <TabsHeader>
         {data.map(({ label, value, icon }) => (
           <Tab key={value} value={value}>
@@ -56,7 +56,7 @@ export default function Studentadmissionform() {
             </div>
           </Tab>
         ))}
-      </TabsHeader>
+      </TabsHeader> 
       <TabsBody>
         {data.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
