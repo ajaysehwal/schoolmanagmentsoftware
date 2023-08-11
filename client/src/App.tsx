@@ -36,6 +36,9 @@ const Teacherdetailpage=lazy(()=>import('./components/teacherdetailpage'));
 const AddSchoolHoilday=lazy(()=>import('./components/AddSchoolholiday'));
 const Teachertimetable=lazy(()=>import('./components/teachertimetable'));
 const Managestudentfees=lazy(()=>import('./components/managestudentfees'));
+const Studentfeerecord=lazy(()=>import ('./components/studentfeerecord'));
+const Announcement=lazy(()=>import('./components/Announcement'));
+const Addannouncement=lazy(()=>import('./components/Addannouncement'));
 function App() {
  
   const [loading, setLoading] = useState<boolean>(true);
@@ -83,6 +86,32 @@ function App() {
               </Suspense>
             }
           />
+           <Route
+            path="/students/detailtable/student_fee_record/:id"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Studentfeerecord/>
+              </Suspense>
+            }
+          />
+           <Route
+            path="/operations/announcement"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Announcement/>
+              </Suspense>
+            }
+          />
+
+<Route
+            path="/operations/announcement/addnew_announcement"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Addannouncement/>
+              </Suspense>
+            }
+          />
+          
             <Route
             path="/students/detailtable/managestudentfees/:id"
             element={
