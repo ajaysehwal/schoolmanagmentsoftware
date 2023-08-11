@@ -5,12 +5,20 @@ import { Input, Button } from '@material-tailwind/react';
 import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from '@material-tailwind/react';
+import {
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
-} from "@material-tailwind/react";
- 
+} from '@material-tailwind/react';
+import { IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline"
+
 import {
   Accordion,
   AccordionHeader,
@@ -21,18 +29,43 @@ import emptyfolder from './images/emptyfolder.png';
 
 import Cookies from 'universal-cookie';
 export default function Studentdetailtable() {
-  const [data, setdata] = useState([]);
-  const {register,handleSubmit,watch,formState:{errors}}=useForm();
-  const [open0, setOpen0] = React.useState(false);
+  const [active, setActive] = React.useState(1);
  
+  const getItemProps = (index) =>
+    ({
+      variant: active === index ? "filled" : "text",
+      color: active === index ? "blue" : "blue-gray",
+      onClick: () => setActive(index),
+    } as any);
+ 
+  const next = () => {
+    if (active === 5) return;
+ 
+    setActive(active + 1);
+  };
+ 
+  const prev = () => {
+    if (active === 1) return;
+ 
+    setActive(active - 1);
+  };
+  const [data, setdata] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const [open0, setOpen0] = React.useState(false);
+
   const handleOpen0 = () => setOpen0(!open0);
   const [open, setOpen] = useState(1);
-  const [newvalue,setnewvalue]=useState(1);
-  const handleOpen = (value:any) => {
+  const [newvalue, setnewvalue] = useState(1);
+  const handleOpen = (value: any) => {
     setOpen(open === value ? 0 : value);
     setnewvalue(value);
     console.log(value);
-  }
+  };
 
   const cookies = new Cookies();
   const auth = cookies.get('_UID');
@@ -48,25 +81,24 @@ export default function Studentdetailtable() {
 
   const [finaldata, setfinaldata] = useState([]);
 
-  const getstudentdata = async (token:any,classes:any,section:any) => {
+  const getstudentdata = async (token: any, classes: any, section: any) => {
     try {
       const res = await axios.get(
         `http://localhost:8000/studentsdata/${classes}/${section}/${token}`
       );
       console.log(res);
-        if(res.data.length===0){
-          handleOpen0()
-        }else{
-          setdata(res.data);
-       
-          setfinaldata(res.data);
-        }
-    
+      if (res.data.length === 0) {
+        handleOpen0();
+      } else {
+        setdata(res.data);
+
+        setfinaldata(res.data);
+      }
     } catch (err) {
       return err;
     }
   };
-  
+
   const [filterval, setfilterval] = useState('');
   const [filerbyclass, setfilterbyclass] = useState('');
   const searchbarchange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +124,7 @@ export default function Studentdetailtable() {
   //   setfilterbyclass(e.target.value);
   // };
   const [classes, setgetclasses] = useState([]);
-  const [section,setsection]=useState([]);
+  const [section, setsection] = useState([]);
 
   const getclasses = async (token: any) => {
     setload(true);
@@ -108,17 +140,16 @@ export default function Studentdetailtable() {
       console.log('error', err);
     }
   };
-  const getsectionbyclass=async(value:any,verified_token:any)=>{
-    try{
-      const res=await axios.get(`http://localhost:8000/studentsection/${value}/${verified_token}`);
-        setsection(res.data)
-
-      
-    }catch(err){
-     
-       console.log("error",err);
+  const getsectionbyclass = async (value: any, verified_token: any) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/studentsection/${value}/${verified_token}`
+      );
+      setsection(res.data);
+    } catch (err) {
+      console.log('error', err);
     }
-  }
+  };
   const CUSTOM_ANIMATION = {
     mount: { scale: 1 },
     unmount: { scale: 0.9 },
@@ -126,56 +157,84 @@ export default function Studentdetailtable() {
   useEffect(() => {
     getclasses(auth);
   }, []);
-  const onSubmit=(data:any)=>{
+  const onSubmit = (data: any) => {
     console.log(data);
-    if(data.class==''&&data.section==''){
+    if (data.class == '' && data.section == '') {
       handleOpen0();
       setdata([]);
-
-    }else{
+    } else {
       setdata([]);
 
-    getstudentdata(auth,data.class,data.section);
+      getstudentdata(auth, data.class, data.section);
     }
-     
-  }
+  };
   return (
     <div>
-         <div  className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"  style={{width:'100%',marginBottom:'10px',display:'flex',alignItems:'center',justifySelf:'center',gap:'10px',padding:'20px'}} >
-        <select  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"  
-        {...register('class',{onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{
-                   getsectionbyclass(e.target.value,auth);}}) } >
-            <option value="">Select Class</option>
-
-       {classes?.map((el)=>(
-          <option value={el.class_name}>
-              {el.class_name}
-          </option>
-       ))}
-       
-       
-      </select>
-      <select   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" color="teal" label="select Class" {...register('section') } >
-      <option value="">Select Section</option>
-
-        {section?.map((el)=>(
-
-         <option value={el.section}>{el.section}</option>
-
-        ))}
-       
-      </select>
-      <Button onClick={handleSubmit(onSubmit)} color="green" style={{display:'flex',alignItems:'center',gap:'3px'}}>
-        
-        <p>Get</p>
-       <svg className="h-4 w-4"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/> 
-         <circle cx="10" cy="10" r="7" /> 
-          <line x1="7" y1="10" x2="13" y2="10" />  
-          <line x1="10" y1="7" x2="10" y2="13" />  <line x1="21" y1="21" x2="15" y2="15" /></svg>
-      </Button>
-        </div>
       <div
-       
+        className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+        style={{
+          width: '100%',
+          marginBottom: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifySelf: 'center',
+          gap: '10px',
+          padding: '20px',
+        }}
+      >
+        <select
+          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+          {...register('class', {
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+              getsectionbyclass(e.target.value, auth);
+            },
+          })}
+        >
+          <option value="">Select Class</option>
+
+          {classes?.map((el) => (
+            <option value={el.class_name}>{el.class_name}</option>
+          ))}
+        </select>
+        <select
+          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+          color="teal"
+          label="select Class"
+          {...register('section')}
+        >
+          <option value="">Select Section</option>
+
+          {section?.map((el) => (
+            <option value={el.section}>{el.section}</option>
+          ))}
+        </select>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          color="green"
+          style={{ display: 'flex', alignItems: 'center', gap: '3px' }}
+        >
+          <p>Get</p>
+          <svg
+            className="h-4 w-4"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            {' '}
+            <path stroke="none" d="M0 0h24v24H0z" />
+            <circle cx="10" cy="10" r="7" />
+            <line x1="7" y1="10" x2="13" y2="10" />
+            <line x1="10" y1="7" x2="10" y2="13" />{' '}
+            <line x1="21" y1="21" x2="15" y2="15" />
+          </svg>
+        </Button>
+      </div>
+      <div
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -251,16 +310,32 @@ export default function Studentdetailtable() {
             gap: '10px',
           }}
         >
-         
-           <label className="sr-only">Search</label>
-                        <div className="relative w-full">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                                </svg>
-                            </div>
-                            <input  value={filterval} onInput={(e) => searchbarchange(e)} type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search student by name"/>
-                        </div>
+          <label className="sr-only">Search</label>
+          <div className="relative w-full">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg
+                aria-hidden="true"
+                className="text-gray-500 dark:text-gray-400 h-5 w-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              value={filterval}
+              onInput={(e) => searchbarchange(e)}
+              type="text"
+              id="simple-search"
+              className="bg-gray-50 border-gray-300 text-gray-900 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border p-2 pl-10 text-sm dark:text-white"
+              placeholder="Search student by name"
+            />
+          </div>
           {/* <select
             value={filerbyclass}
             onChange={(e) => filterbyclass(e)}
@@ -288,23 +363,23 @@ export default function Studentdetailtable() {
                   Class
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                   Section
+                  Section
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Father Name
                 </th>
-                
+
                 <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                   Phone
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Fee status
                 </th>
-              
 
                 <th className="py-4 px-4 font-medium text-black dark:text-white">
                   Actions
                 </th>
+                {/* <th></th> */}
               </tr>
             </thead>
             <tbody>
@@ -341,17 +416,18 @@ export default function Studentdetailtable() {
                   <tr key={el.id}>
                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                       <img
-                       onClick={() => handleOpen(el.id)}
+                        onClick={() => handleOpen(el.id)}
                         style={{ cursor: 'pointer' }}
                         className="h-20 w-20"
                         src={`http://localhost:8000/${el.student_image}`}
                         alt=""
                       />
-                      <Accordion open={open === el.id} animate={CUSTOM_ANIMATION}>
-                      <AccordionBody>
-                      g
-                      </AccordionBody>
-                    </Accordion>
+                      <Accordion
+                        open={open === el.id}
+                        animate={CUSTOM_ANIMATION}
+                      >
+                        <AccordionBody>g</AccordionBody>
+                      </Accordion>
                     </td>
 
                     <td>
@@ -373,20 +449,51 @@ export default function Studentdetailtable() {
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <p className="text-black dark:text-white">
-                        {el.phone}
-                      </p>
+                      <p className="text-black dark:text-white">{el.phone}</p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <p style={{padding:'5px',color:"white",background:'orange',fontSize:'12px',textAlign:'center',fontWeight:'600',borderRadius:'10px'}}>
+                      <p
+                        style={{
+                          padding: '5px',
+                          color: 'white',
+                          background: 'orange',
+                          fontSize: '12px',
+                          textAlign: 'center',
+                          fontWeight: '600',
+                          borderRadius: '10px',
+                        }}
+                      >
                         Balance remain
                       </p>
                     </td>
 
-                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <div className="flex items-center space-x-3.5">
-                        <Link to={`/students/studentdetails/${el.id}`}>
-                          <button className="hover:text-primary">
+                 
+                    <td className="flex items-center justify-end px-4 py-3" style={{textAlign:'center'}}>
+                      <Menu
+                        animate={{
+                          mount: { y: 0 },
+                          unmount: { y: 25 },
+                        }}
+                      
+                      >
+                        <MenuHandler>
+                          <Button  variant="text" color='silver' style={{marginTop:'20px'}}>
+                            <svg
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              style={{color:'gray'}}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                            </svg>
+                          </Button>
+                        </MenuHandler>
+                        <MenuList>
+                          <MenuItem>
+                            <Link to={`/students/studentdetails/${el.student_code}`}>
+                          <button className="hover:text-primary" style={{display:'flex',alignItems:'center',gap:'5px'}}>
                             <svg
                               className="fill-current"
                               width="18"
@@ -404,10 +511,12 @@ export default function Studentdetailtable() {
                                 fill=""
                               />
                             </svg>
+                           <p> Preview</p>
                           </button>
                         </Link>
-
-                        <button className="hover:text-primary">
+                          </MenuItem>
+                          <MenuItem>
+                          <button className="hover:text-primary" style={{display:'flex',alignItems:'center',gap:'5px'}}>
                           <svg
                             className="h-6 w-6"
                             viewBox="0 0 24 24"
@@ -423,33 +532,18 @@ export default function Studentdetailtable() {
                             <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />{' '}
                             <line x1="16" y1="5" x2="19" y2="8" />
                           </svg>
+                          <p> Edit</p>
                         </button>
-                        <button className="hover:text-primary">
-                          <svg
-                            className="fill-current"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 18 18"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16.8754 11.6719C16.5379 11.6719 16.2285 11.9531 16.2285 12.3187V14.8219C16.2285 15.075 16.0316 15.2719 15.7785 15.2719H2.22227C1.96914 15.2719 1.77227 15.075 1.77227 14.8219V12.3187C1.77227 11.9812 1.49102 11.6719 1.12539 11.6719C0.759766 11.6719 0.478516 11.9531 0.478516 12.3187V14.8219C0.478516 15.7781 1.23789 16.5375 2.19414 16.5375H15.7785C16.7348 16.5375 17.4941 15.7781 17.4941 14.8219V12.3187C17.5223 11.9531 17.2129 11.6719 16.8754 11.6719Z"
-                              fill=""
-                            />
-                            <path
-                              d="M8.55074 12.3469C8.66324 12.4594 8.83199 12.5156 9.00074 12.5156C9.16949 12.5156 9.31012 12.4594 9.45074 12.3469L13.4726 8.43752C13.7257 8.1844 13.7257 7.79065 13.5007 7.53752C13.2476 7.2844 12.8539 7.2844 12.6007 7.5094L9.64762 10.4063V2.1094C9.64762 1.7719 9.36637 1.46252 9.00074 1.46252C8.66324 1.46252 8.35387 1.74377 8.35387 2.1094V10.4063L5.40074 7.53752C5.14762 7.2844 4.75387 7.31252 4.50074 7.53752C4.24762 7.79065 4.27574 8.1844 4.50074 8.43752L8.55074 12.3469Z"
-                              fill=""
-                            />
-                          </svg>
-                        </button>
-                      </div>
+                          </MenuItem>
+                          <MenuItem>
+                           <Link to={`/students/detailtable/managestudentfees/${el.student_code}`}> <Button color='green'>Update Fee</Button> </Link>
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
                     </td>
-                 
                   </tr>
                 ))
               )}
-        
             </tbody>
           </table>
         </div>
@@ -462,25 +556,58 @@ export default function Studentdetailtable() {
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
         }}
-        style={{textAlign:'center',margin:'auto',display:'grid',alignItems:'center',width:'200px',padding:'20px'}}
+        style={{
+          textAlign: 'center',
+          margin: 'auto',
+          display: 'grid',
+          alignItems: 'center',
+          width: '200px',
+          padding: '20px',
+        }}
       >
-        {/* <DialogHeader style={{textAlign:'center',margin:'auto'}}>Error Message</DialogHeader>
-        <DialogBody style={{textAlign:'center',margin:'auto'}} >
-        Ensure you fill all required fields
- 
-        </DialogBody> */}
-          <div>
-            <h1 className='text-3xl font-bold'>Error Message</h1> 
-            <p>
-            Student not found
-            </p>
-            <Button style={{width:'100px',margin:'10px'}} variant="gradient" color="green" onClick={handleOpen0}>
+      
+        <div>
+          <h1 className="text-3xl font-bold">Error Message</h1>
+          <p>Student not found</p>
+          <Button
+            style={{ width: '100px', margin: '10px' }}
+            variant="gradient"
+            color="green"
+            onClick={handleOpen0}
+          >
             <span>Ok</span>
           </Button>
-          </div>
-       
-        
+        </div>
       </Dialog>
+      <div style={{marginLeft:'320px',marginTop:'10px',display:data.length==0?"none":'flex'}} className="flex items-center gap-4">
+      <Button
+        variant="text"
+        color="blue-gray"
+        className="flex items-center gap-2"
+        onClick={prev}
+        disabled={active === 1}
+      >
+        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+      </Button>
+      <div className="flex items-center gap-2">
+        <IconButton {...getItemProps(1)}>1</IconButton>
+        <IconButton {...getItemProps(2)}>2</IconButton>
+        <IconButton {...getItemProps(3)}>3</IconButton>
+        <IconButton {...getItemProps(4)}>4</IconButton>
+        <IconButton {...getItemProps(5)}>5</IconButton>
+      </div>
+      <Button
+        variant="text"
+        color="blue-gray"
+        className="flex items-center gap-2"
+        onClick={next}
+        disabled={active === 5}
+      >
+        Next
+        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+      </Button>
+    </div>
+      
     </div>
   );
 }
