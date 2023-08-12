@@ -83,7 +83,11 @@ app.post('/apistudents',studentupload.fields([
   { name: 'file3', maxCount: 1 },
 ]),controllers.Student_post);
 
-app.get('/apistudents',controllers.getstudent_data);
+app.get('/apistudents/:school_id',controllers.getstudent_data);
+app.get('/schoolstudent/:school_id/:gender',controllers.getstudent_data_by_gender);
+
+app.get('/studentsdata/:classes/:section/:school_id',controllers.getstudent_data_by_class_section);
+app.get('/studentsdata/:classes//:school_id',controllers.getstudent_data_by_class)
 app.get('/apistudents/:id',controllers.getstudent_data_admission_no)
 app.post('/apiexceldata',excelupload.single('file'),controllers.poststudentdata_excel)
 app.post('/apiteacher',teacherupload.fields([
@@ -91,8 +95,11 @@ app.post('/apiteacher',teacherupload.fields([
   { name: 'file2', maxCount: 1 },
 ]),controllers.postteacher_data)
 app.get('/apiteacher/:admin_id/:id',controllers.getteacherdatabyid);
+app.get('/schoolteacher/:school_id/:gender',controllers.getteacherdatabyadmin_by_gender);
+
 app.get('/teacherdata/:teacher_id/:admin_id',controllers.getteacherdatabyteacher_id);
 app.post('/studentclasses.section',controllers.class_section);
+
 app.get('/studentclasses.section',controllers.class_section_get);
 app.get('/studentclasses.section/:id',controllers.class_section_get_id);
 app.get('/studentsection/:classes/:user_id',controllers.class_section_get_class);
@@ -125,5 +132,12 @@ app.delete('/schoolholiday/:id',controllers.schoolholiday_delete);
 app.post('/schoolcalenders',controllers.schoolcalenders);
 app.get('/schoolcalenders',controllers.schoolcalender_get);
 app.get('/schoolcalenders/:id',controllers.schoolcalender_get_id);
-
+app.post('/studentfees',controllers.managestudentfee_post);
+app.get('/studentfees/:school_id/:student_id',controllers.managestudentfee_get_by_school_id)
+app.get('/schoolstudentfees/:student_id/:school_id/:month/:year',controllers.managestudentfee_get_by_school_id_student_id);
+app.post('/schoolannouncement',controllers.school_announcement_post);
+app.get('/schoolannouncement/:school_id',controllers.school_announcement_get);
+app.delete('/schoolannouncement/:id',controllers.school_announcement_delete);
+app.put('/schoolannouncement/:id',controllers.school_announcement_update);
+app.get('/schoolannouncement/:school_id/:id',controllers.school_announcement_id);
 app.listen(process.env.PORT)  
