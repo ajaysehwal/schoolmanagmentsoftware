@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
+import logo from "./images/logo2.png"
 import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
 
@@ -71,8 +71,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/">
-           <h2 style={{color:'white'}} className='text-2xl font-bold'>ERP System</h2>
-          {/* <img src={Logo} alt="Logo" /> */}
+           {/* <h2 style={{color:'white'}} className='text-2xl font-bold'>ERP System</h2> */}
+          <img width='90%' style={{margin:"auto"}} src={logo} alt="Logo" />
         </NavLink>
 
         <button
