@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import {useState} from "react";
 import React from "react";
+import Cookies from 'universal-cookie';
+
 import { ToastContainer, toast } from 'react-toastify';
 
 import axios from 'axios';
@@ -53,19 +55,25 @@ const handlesubmit=(e:React.FormEvent<HTMLFormElement>):void=>{
    e.preventDefault();
    const email=data.user.email;
    const password=data.user.password;
-      admindata(email,password);
+    admindata(email,password);
 }
 const admindata = async (email:any,password:any) => {
   try {
     const res = await axios.get(`http://localhost:8000/apiadmindata/${email}`);
     const token=res.data[0];
-    console.log(res.data);
     const passworddata=res.data[0];
-    // console.log(passworddata);
+     
+   
      if(res.data.length==1){
         if(passworddata.admin_password!==password){
               notify("Please enter vaild password")
         }else{
+          const now = new Date();
+
+          const expirationDate = new Date(now.getTime() + 30 * 24 * 60 *60* 1000); // 20 minutes
+      
+          const cookies = new Cookies();
+          cookies.set('_UID',token.user_token,{expires:expirationDate,path:'/'});
           notify1("Login Successfully")
           setTimeout(()=>{
         document.location.href=`/?token=${token.user_token}`
@@ -80,8 +88,6 @@ const admindata = async (email:any,password:any) => {
   }
 };
 
-  
-  console.log(data);
 
   return (
     <>
