@@ -1,7 +1,30 @@
 import Breadcrumb from '../components/Breadcrumb';
 import userThree from '../images/user/user-03.png';
+import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const Settings = () => {
+  const [data,setdata]=useState({});
+
+  const userdata=async(Uid:any)=>{
+    try{
+      const admindata=await axios.get(`http://localhost:8000/admindata/${Uid}`);
+      const schooldata=await axios.get(`http://localhost:8000/apisignup/${Uid}`);
+       const admin_data=admindata.data[0];
+       setdata(admin_data)
+       const school_data=schooldata.data[0];
+       console.log(admin_data);
+       console.log(school_data);
+    }catch(err){
+      console.log("Error",err);
+    }
+  }
+  const cookies =new Cookies();
+   const user_id= cookies.get('_UID');
+  useEffect(()=>{
+    userdata(user_id);
+  },[])
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -56,6 +79,7 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
+                          value={data.admin_name==undefined?'':data.admin_name}
                           placeholder="Devid Jhon"
                           defaultValue="Devid Jhon"
                         />
@@ -74,6 +98,7 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
+                        value={data.admin_phone==undefined?'':data.admin_phone}
                         placeholder="+990 3343 7865"
                         defaultValue="+990 3343 7865"
                       />
@@ -118,26 +143,42 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
+                        value={data.admin_email}
                         placeholder="devidjond45@gmail.com"
                         defaultValue="devidjond45@gmail.com"
                       />
                     </div>
                   </div>
 
+                 
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
                     >
-                      Username
+                     New Password
                     </label>
                     <input
                       className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
                       name="Username"
                       id="Username"
-                      placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
+                      placeholder="******"
+                    />
+                  </div>
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="Username"
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      type="text"
+                      name="Username"
+                      id="Username"
+                      placeholder="******"
                     />
                   </div>
 
