@@ -2,7 +2,8 @@ import CardFour from '../../components/CardFour.tsx';
 import CardFive from '../../components/CardFive.tsx';
 import CardSix from '../../components/CardSix.tsx';
 import CardSeven from '../../components/CardSeven.tsx';
-
+import Cookies from 'universal-cookie';
+ import Announcementbox from "../../components/complainbox.tsx";
 import CardOne from '../../components/CardOne.tsx';
 import CardThree from '../../components/CardThree.tsx';
 import CardTwo from '../../components/CardTwo.tsx';
@@ -12,8 +13,13 @@ import ChartTwo from '../../components/ChartTwo.tsx';
 import ChatCard from '../../components/ChatCard.tsx';
 import MapOne from '../../components/MapOne.tsx';
 import TableOne from '../../components/TableOne.tsx';
-
+import { Navigate } from 'react-router-dom';
 const ECommerce = () => {
+  const cookies = new Cookies();
+    const auth=cookies.get('_UID');
+   if(!auth){
+     return <Navigate to='/signin'/>
+   }
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -22,15 +28,15 @@ const ECommerce = () => {
         <CardThree />
         <CardFour />
       </div>
-      <div style={{marginTop:"20px"}} className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
+      <div style={{marginTop:"20px"}} className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
        <CardFive/>
        <CardSix/>
-       <CardSeven/>
+     
       </div>
 
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
+        <Announcementbox />
         <ChartTwo />
         <ChartThree />
         <MapOne />
