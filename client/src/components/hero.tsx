@@ -23,13 +23,13 @@ export default function Hero() {
             style={{
               margin: "auto",
               width: "80%",
-              textAlign: "center",
+              textAlign:"center"
             }}
           >
             <h1
               className="font-bold text-5xl sm:text-3xl md:text-5xl"
               id="headtext"
-              style={{ marginBottom: "20px",padding:"10px" }}
+              style={{ marginBottom: "10px",padding:"10px", }}
             >
               Enterprise Resourse Planning System
             </h1>
@@ -38,12 +38,11 @@ export default function Hero() {
                 color: "sliver",
                 width: "75%",
                 margin: "auto",
-                textAlign: "center",
+               
               }}
               id="supporttext"
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-              fuga rum nulla corporis beatae facil
+            Oohr Innovations Private Limited is a company dedicated to furnishing digital platforms for all educational institutions
             </p>
                     <Button id="supporttext" style={{marginTop:"20px"}}>Get Started</Button>
           </div>
