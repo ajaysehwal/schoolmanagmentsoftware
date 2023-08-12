@@ -326,6 +326,7 @@ const studenthouse_delete = (req, res) => {
 }
 const Student_post = (req, res) => {
   const { file1, file2, file3 } = req.files;
+  const randomCode = crypto.randomBytes(6).toString('hex').toUpperCase();
 
   const studentdata = [
     req.body.student_name,
@@ -361,11 +362,11 @@ const Student_post = (req, res) => {
     req.body.additional_information,
     file2[0].path,
     req.body.gender,
-    req.body.admin_token
-
+    req.body.admin_token,
+    randomCode
   ]
   console.log(studentdata);
-  const sql = "INSERT INTO `studentdata`(`student_name`, `date_of_birth`, `father_name`, `mother_name`, `mother_tougue`, `address`, `nationality`, `admission_no`, `age`, `religion`, `city`, `phone`, `parents_phone`, `previous_school_name`, `class_in_which_was_studing`, `email`, `transfer_certificate`, `physical_handicap`, `house`, `student_category`, `select_class`,`section`,`place_birth`, `state`, `blood_group`, `dateofleaving`, `student_document`, `birth_certificate`, `student_image`, `additional_information`, `other_document`,`gender`,`admin_token`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+  const sql = "INSERT INTO `studentdata`(`student_name`, `date_of_birth`, `father_name`, `mother_name`, `mother_tougue`, `address`, `nationality`, `admission_no`, `age`, `religion`, `city`, `phone`, `parents_phone`, `previous_school_name`, `class_in_which_was_studing`, `email`, `transfer_certificate`, `physical_handicap`, `house`, `student_category`, `select_class`,`section`,`place_birth`, `state`, `blood_group`, `dateofleaving`, `student_document`, `birth_certificate`, `student_image`, `additional_information`, `other_document`,`gender`,`admin_token`,`student_code`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
   db.query(sql, studentdata, (err, data) => {
     if (err) {
       return err
@@ -377,8 +378,9 @@ const Student_post = (req, res) => {
 }
 
 const getstudent_data = (req, res) => {
-  const sql = "SELECT * FROM `studentdata`";
-  db.query(sql, (err, data) => {
+  const id=req.params.school_id;
+  const sql = "SELECT * FROM `studentdata` WHERE admin_token=?";
+  db.query(sql,id, (err, data) => {
     if (err) {
       return err
     } else {
@@ -386,7 +388,41 @@ const getstudent_data = (req, res) => {
     }
   })
 }
+const getstudent_data_by_gender = (req, res) => {
+  const {school_id,gender}=req.params;
+  const sql = "SELECT * FROM `studentdata` WHERE admin_token=? AND gender=?";
+  db.query(sql,[school_id,gender], (err, data) => {
+    if (err) {
+      return err
+    } else {
+      res.send(data);
+    }
+  })
+}
+const getstudent_data_by_class_section=(req,res)=>{
+  const {classes,section,school_id}=req.params;
+  const sql="SELECT * FROM `studentdata` WHERE select_class=? AND section=? AND admin_token=?";
+  db.query(sql,[classes,section,school_id],(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
 
+}
+
+const getstudent_data_by_class=(req,res)=>{
+  const {classes,school_id}=req.params;
+  const sql="SELECT * FROM `studentdata` WHERE select_class=? AND admin_token=?";
+  db.query(sql,[classes,school_id],(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
+}
 const getstudent_data_admission_no = (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM `studentdata` WHERE admission_no=?";
@@ -435,6 +471,8 @@ const poststudentdata_excel = (req, res) => {
       data[17] || '',
       data[18] || '',
       data[19] || '',
+     req.body.class,
+     req.body.section,
       data[20] || '',
       data[21] || '',
       data[22] || '',
@@ -445,8 +483,6 @@ const poststudentdata_excel = (req, res) => {
       data[27] || '',
       data[28] || '',
       data[29] || '',
-      data[30] || '',
-      data[31] || '',
       req.body.admin_token,
     ]
     const sql = "INSERT INTO `studentdata`(`student_name`, `date_of_birth`, `father_name`,`mother_name`, `mother_tougue`, `address`, `nationality`, `admission_no`, `age`, `religion`, `city`, `phone`, `parents_phone`, `previous_school_name`, `class_in_which_was_studing`, `email`, `transfer_certificate`, `physical_handicap`, `house`, `student_category`, `select_class`, `section`, `place_birth`, `state`, `blood_group`, `dateofleaving`, `student_document`, `birth_certificate`, `student_image`, `additional_information`, `other_document`,`gender`,`admin_token`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
@@ -583,6 +619,17 @@ const getteacherdatabyadmin = (req, res) => {
     }
   })
 }
+const getteacherdatabyadmin_by_gender = (req, res) => {
+   const {school_id,gender}=req.params;
+  const sql = "SELECT * FROM `teachersdata` WHERE admin_token=? AND gender=?"
+  db.query(sql, [school_id,gender], (err, data) => {
+    if (err) {
+      return err;
+    } else {
+      res.send(data);
+    }
+  })
+}
 const getteacherdatabyid = (req, res) => {
   const { admin_id, id } = req.params;
   const sql = "SELECT * FROM `teachersdata` WHERE id=? AND admin_token=?"
@@ -607,7 +654,7 @@ const getteacherdatabyteacher_id=(req,res)=>{
 }
 const studentdetailbyid = (req, res) => {
   const id = req.params.id;
-  const sql = "SELECT * FROM `studentdata` WHERE id=?";
+  const sql = "SELECT * FROM `studentdata` WHERE student_code=?";
   db.query(sql, id, (err, data) => {
     if (err) {
       return err;
@@ -833,9 +880,132 @@ const schooltimetable_get_class_section=(req,res)=>{
     }
    })
 }
+const managestudentfee_post=(req,res)=>{
+  const sqldata=[
+    req.body.month,
+    req.body.amount,
+    req.body.fee_status,
+    req.body.year,
+    req.body.date,
+    req.body.student_id,
+    req.body.class,
+    req.body.section,
+    req.body.student_name,
+    req.body.school_id,
+    req.body.remain_balance
+  ]
+  const sql="INSERT INTO `manage_student_fee`(`month`, `amount`, `status`, `year`, `date`, `student_id`, `class`, `section`, `student_name`,`school_id`,`remain_balance`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+   db.query(sql,sqldata,(err,data)=>{
+  if(err){
+    res.send(err);
+  }else{
+    res.send(data);
+  }
+})
+}
+const managestudentfee_get_by_school_id=(req,res)=>{
+  const school_id=req.params.school_id;
+  const student_id=req.params.student_id;
+   const sql="SELECT * FROM `manage_student_fee` WHERE school_id=? AND student_id=?";
+    db.query(sql,[school_id,student_id],(err,data)=>{
+      if(err){
+        res.send(err);
+      }else{
+        res.send(data);
+      }
+    })
+}
+const managestudentfee_get_by_school_id_student_id=(req,res)=>{
+  const {student_id,school_id,month,year}=req.params;
+   const sql="SELECT * FROM `manage_student_fee` WHERE school_id=? AND student_id=? AND month=? AND year=?";
+    db.query(sql,[school_id,student_id,month,year],(err,data)=>{
+      if(err){
+        res.send(err);
+      }else{
+        res.send(data);
+      }
+    })
+}
+const school_announcement_post=(req,res)=>{
+  const sqldata=[
+    req.body.heading,
+    req.body.notice,
+    req.body.date,
+    req.body.school_id
+  ]
+  const sql="INSERT INTO `new_announcement`(`heading`, `notice`, `date`, `school_id`) VALUES (?,?,?,?)";
+  db.query(sql,sqldata,(err,data)=>{
+    if(err){
+        res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
+}
+const school_announcement_get=(req,res)=>{
+  const id=req.params.school_id;
+  const sql="SELECT * FROM `new_announcement` WHERE school_id=?";
+  db.query(sql,id,(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
+}
+const school_announcement_delete=(req,res)=>{
+  const id=req.params.id;
+  const sql="DELETE FROM `new_announcement` WHERE id=?";
+  db.query(sql,id,(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
+}
+const school_announcement_update=(req,res)=>{
+  const id=req.params.id;
+  const sqldata=[
+    req.body.heading,
+    req.body.notice,
+    req.body.date,
+    req.body.school_id,
+    id,
+  ]
+  const sql="UPDATE `new_announcement` SET `heading`=?,`notice`=?,`date`=?,`school_id`=? WHERE id=?"
+  db.query(sql,sqldata,(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data);
+    }
+  })
+}
+const  school_announcement_id=(req,res)=>{
+   const {school_id,id}=req.params;
+   const sql="SELECT * FROM `new_announcement` WHERE school_id=? AND id=?";
+   db.query(sql,[school_id,id],(err,data)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.send(data)
+    }
+   })
+}
 module.exports = {
   admindata_get_email,
   admindata_post,
+  school_announcement_id,
+  school_announcement_update,
+  school_announcement_delete,
+  school_announcement_get,
+  school_announcement_post,
+  getstudent_data_by_gender,
+  managestudentfee_get_by_school_id_student_id,
+  managestudentfee_get_by_school_id,
+  managestudentfee_post,
+  getstudent_data_by_class_section,
   schooltimetable_get_class_section,
   schoolcalender_get_id,
   schoolcalender_get,
@@ -863,6 +1033,7 @@ module.exports = {
   poststudentdata_excel,
   signupemail,
   class_section,
+  getstudent_data_by_class,
   signuppost,
   apisignupid,
   schooltimetable_get_teacher,
@@ -883,6 +1054,7 @@ module.exports = {
   studenthouse_get,
   getstudent_data,
   studenthouse_post,
+  getteacherdatabyadmin_by_gender,
   studenthouse_get_id,
   studenthouse_delete,
   Student_post,
