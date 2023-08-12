@@ -1,8 +1,14 @@
 import Breadcrumb from '../components/Breadcrumb';
 import CoverOne from '../images/cover/cover-01.png';
 import userSix from '../images/user/user-06.png';
-
+import Cookies from 'universal-cookie';
+import { Navigate } from 'react-router-dom';
 const Profile = () => {
+  const cookies = new Cookies();
+  const auth=cookies.get('_UID');
+ if(!auth){
+   return <Navigate to='/signin'/>
+ }
   return (
     <>
       <Breadcrumb pageName="Profile" />
