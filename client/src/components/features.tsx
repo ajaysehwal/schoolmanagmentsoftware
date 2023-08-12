@@ -1,6 +1,196 @@
 // import React from 'react'
-
+import LMS from "./images/LMS.png";
+import Security from "./images/Security.png";
+import staffinfo from "./images/staffinfo.png"
+import sessionmanagement from "./images/SessionManagement.png";
+import streaming from "./images/streming.png";
+import managementandassignment from "./images/managementandassignment.png";
+import moraltalk from "./images/moraltalk.png"
+import schoolclubmanagement from "./images/schoolclubmanagement.png";
+import gradesystem from "./images/gradesystem.png"
+import schoolwebsite from "./images/schoolwebsite.png";
+import score from "./images/score.png";
+import payment from './images/payment.png';
+import studentwallets from "./images/studentwallets.png";
+import email from "./images/emailandsms.png"
+import assignmentmanagement from "./images/assignmentmanagement.png";
+import cloud_sever from "./images/cloud_server.png";
+import libery from "./images/liberaymanagement.png"
+import transport from "./images/transportmanagement.png";
 export default function Features() {
+
+  const data=[
+    {
+       img:Security,
+     heading:'Ensure Privacy & Security',
+     text:'Our system is very secure , we have used high sescured hosting company to power our app',
+     link:"#"
+    },
+    {
+      img:LMS,
+      heading:'LMS',
+      text:'Readliy available learning management system',
+      link:"#"
+     },
+     {
+       img:streaming,
+      heading:'Streaming Access & Speed',
+      text:'Advanced dashboard with multiple excellent statistics and widget.',
+      link:"#"
+     }, 
+      {
+      img:staffinfo,
+      heading:'Staff Information System',
+      text:'Manage and track all the staff (Teachers, Librarian, Hostel Manager, Human Resources)',
+      link:"#"
+     },
+     {
+      img:sessionmanagement,
+      heading:'Session Management',
+      text:'Admin can manage academic session with just a single click without any stress.',
+      link:"#"
+     },
+     {
+      img:managementandassignment,
+      heading:'Management & Assignment of Task',
+      text:'Admin can assign task to teachers, students, accountants and others.',
+      link:"#"
+     },
+     
+     {
+      img:moraltalk,
+      heading:'Automated Moral Talk',
+      text:'Here, school staff can give daily moral talk for students with ease. ',
+      link:"#"
+     },
+     
+     {
+      img:schoolclubmanagement,
+      heading:'Student Club Management',
+      text:'Clubs are assign to students and this create good relationship among students.',
+      link:"#"
+     },
+     {
+      img:gradesystem,
+      heading:'Standard Grading System',
+      text:'There is an advanced grading system integrated in our system.',
+      link:"#"
+     },
+     {
+       img:schoolwebsite,
+      heading:'School Website ',
+      text:'Oohr support individual school portal',
+      link:"#"
+     },
+     {
+      img:score,
+      heading:'Entering Student Score ',
+      text:'Advanced Marking system for students so that they can supply marks smoothly. ',
+      link:"#"
+     },
+     
+     {
+      img:payment,
+      heading:'Account, Invoice & Payments  ',
+      text:'Privileged users can manage invoice & payments ',
+      link:"#"
+     },
+     {
+      img:studentwallets,
+      heading:'Student Digital Wallet',
+      text:'Students can load money into their wallet and this can be used to pay school fee. ',
+      link:"#"
+     },
+     {
+       img:email,
+      heading:'Email & SMS',
+      text:'Privileged users can send email and sms to any user or user group. ',
+      link:"#"
+     },
+     {
+       img:assignmentmanagement,
+      heading:'Assignment Management ',
+      text:'Teachers can make assignment for student and manage them smoothly. ',
+      link:"#"
+     },
+     {
+      img:cloud_sever,
+      heading:'Cloud Server',
+      text:'Our free school is hosted on cloud server thereby given you less stress on hosting ',
+      link:"#"
+     },
+     {
+      img:libery,
+      heading:'Library Management ',
+      text:'Complete Library system integrated so that librarian can manage books easily.',
+      link:"#"
+     },
+     {
+      img:transport,
+      heading:'Transport Management',
+      text:'Complete transportation system for users to handle transport easily.',
+      link:"#"
+     },
+     {
+      
+      heading:'Student ID Card with Barcode',
+      text:'Student and Mass ID card can be generated with barcode.',
+      link:"#"
+     },
+     {
+      
+      heading:'Hostel Management',
+      text:'Complete hostel management system for users to handle hostel easily.',
+      link:"#"
+     }, {
+      
+      heading:'Student Promotion',
+      text:'Privileged users Promote student from one class to another.',
+      link:"#"
+     }, {
+      
+      heading:'Media Sharing(Video)',
+      text:'Privileged users can share files & media to each others.',
+      link:"#"
+     }, {
+      
+      heading:'Event Management',
+      text:'You can send event notification with SMS option.',
+      link:"#"
+     },
+     {
+      
+      heading:'Noticeboard Management',
+      text:'Privileged users can announce notice information to other users.',
+      link:"#"
+     },
+     {
+      
+      heading:'9 SMS Gateways',
+      text:'Clickattel, Hajanaone, Twillion, MSG91, Textlocal, Bulk SMS, Nexmo, Smartsms, Sendpk.',
+      link:"#"
+     },
+     {
+      
+      heading:'Multi-linqual App ',
+      text:'We have translated our system in 14 different languages.',
+      link:"#"
+     },
+     {
+      
+      heading:'Academic Syllabus Management',
+      text:'Teachers & Privileged users manage class syllabus.',
+      link:"#"
+     },
+     {
+      
+      heading:'Standard Report Management',
+      text:'Advance reporting system for now integrated for the previledged users',
+      link:"#"
+     },
+     
+
+  ]
   return (
     <div style={{width:"90%",margin:"auto"}}>
          <h2 style={{textAlign:'center'}} className="my-8 text-2xl font-bold text-gray-700 dark:text-white md:text-4xl">
@@ -10,23 +200,19 @@ export default function Features() {
 
   <div>
     <div className="md:w-2/3 lg:w-1/2">
-      {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-secondary">
-        <path fill-rule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z" clip-rule="evenodd" />
-      </svg> */}
-      
-      {/* <h2 className="my-8 text-2xl font-bold text-gray-700 dark:text-white md:text-4xl">
-        A technology-first approach to payments
-        and finance
-      </h2>
-      <p className="text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ad ipsum pariatur autem, fugit laborum in atque amet obcaecati? Nisi minima aspernatur, quidem nulla cupiditate nam consequatur eligendi magni adipisci.</p> */}
+    
     </div>
     <div
       className="mt-16 grid divide-x divide-y divide-gray-100 dark:divide-gray-700 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
     >
+      {data?.map((el,i)=>(
+
+      
       <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
         <div className="relative space-y-8 py-12 p-8">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png"
+            // src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png"
+            src={el.img}
             className="w-12"
             width="512"
             height="512"
@@ -37,13 +223,13 @@ export default function Features() {
             <h5
               className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
             >
-              First feature
+              {el.heading}
             </h5>
             <p className="text-gray-600 dark:text-gray-300">
-              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
+              {el.text}
             </p>
           </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
+          <a href={el.link} className="flex items-center justify-between group-hover:text-secondary">
             <span className="text-sm">Read more</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
               <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
@@ -51,123 +237,8 @@ export default function Features() {
           </a>
         </div>
       </div>
-      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
-        <div className="relative space-y-8 py-12 p-8">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4341/4341134.png"
-            className="w-12"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
-
-          <div className="space-y-2">
-            <h5
-              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
-            >
-              Second feature
-            </h5>
-            <p className="text-gray-600 dark:text-gray-300">
-              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
-            </p>
-          </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
-            <span className="text-sm">Read more</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-            </svg>                
-          </a>
-        </div>
-      </div>
-      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
-        <div className="relative space-y-8 py-12 p-8">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4341/4341160.png"
-            className="w-12"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
-
-          <div className="space-y-2">
-            <h5
-              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
-            >
-              Third feature
-            </h5>
-            <p className="text-gray-600 dark:text-gray-300">
-              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
-            </p>
-          </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
-            <span className="text-sm">Read more</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-            </svg>                
-          </a>
-        </div>
-      </div>
-      <div
-        className="group relative bg-gray-50 dark:bg-gray-900 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10"
-      >
-        <div
-          className="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white dark:group-hover:bg-gray-800"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png"
-            className="w-12"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
-
-          <div className="space-y-2">
-            <h5
-              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
-            >
-              More features
-            </h5>
-            <p className="text-gray-600 dark:text-gray-300">
-              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
-            </p>
-          </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
-            <span className="text-sm">Read more</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-            </svg>                
-          </a>
-        </div>
-      </div>
-      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
-        <div className="relative space-y-8 py-12 p-8">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png"
-            className="w-12"
-            width="512"
-            height="512"
-            alt="burger illustration"
-          />
-
-          <div className="space-y-2">
-            <h5
-              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
-            >
-              First feature
-            </h5>
-            <p className="text-gray-600 dark:text-gray-300">
-              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
-            </p>
-          </div>
-          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
-            <span className="text-sm">Read more</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-            </svg>                
-          </a>
-        </div>
-      </div>
-      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+      ))}
+      {/* <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
         <div className="relative space-y-8 py-12 p-8">
           <img
             src="https://cdn-icons-png.flaticon.com/512/4341/4341134.png"
@@ -371,6 +442,122 @@ export default function Features() {
           </a>
         </div>
       </div>
+      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+        <div className="relative space-y-8 py-12 p-8">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png"
+            className="w-12"
+            width="512"
+            height="512"
+            alt="burger illustration"
+          />
+
+          <div className="space-y-2">
+            <h5
+              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
+            >
+              First feature
+            </h5>
+            <p className="text-gray-600 dark:text-gray-300">
+              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
+            </p>
+          </div>
+          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
+            <span className="text-sm">Read more</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>                
+          </a>
+        </div>
+      </div>
+      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+        <div className="relative space-y-8 py-12 p-8">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4341/4341134.png"
+            className="w-12"
+            width="512"
+            height="512"
+            alt="burger illustration"
+          />
+
+          <div className="space-y-2">
+            <h5
+              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
+            >
+              Second feature
+            </h5>
+            <p className="text-gray-600 dark:text-gray-300">
+              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
+            </p>
+          </div>
+          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
+            <span className="text-sm">Read more</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>                
+          </a>
+        </div>
+      </div>
+      <div className="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+        <div className="relative space-y-8 py-12 p-8">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4341/4341160.png"
+            className="w-12"
+            width="512"
+            height="512"
+            alt="burger illustration"
+          />
+
+          <div className="space-y-2">
+            <h5
+              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
+            >
+              Third feature
+            </h5>
+            <p className="text-gray-600 dark:text-gray-300">
+              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
+            </p>
+          </div>
+          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
+            <span className="text-sm">Read more</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>                
+          </a>
+        </div>
+      </div>
+      <div
+        className="group relative bg-gray-50 dark:bg-gray-900 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10"
+      >
+        <div
+          className="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white dark:group-hover:bg-gray-800"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png"
+            className="w-12"
+            width="512"
+            height="512"
+            alt="burger illustration"
+          />
+
+          <div className="space-y-2">
+            <h5
+              className="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary"
+            >
+              More features
+            </h5>
+            <p className="text-gray-600 dark:text-gray-300">
+              Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum.
+            </p>
+          </div>
+          <a href="#" className="flex items-center justify-between group-hover:text-secondary">
+            <span className="text-sm">Read more</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>                
+          </a>
+        </div>
+      </div> */}
     </div>
   </div>
 </div>
