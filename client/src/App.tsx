@@ -52,7 +52,7 @@ function App() {
   ) : (
     <>
       <Routes>
-      <Route path='/home' element={<Home/>} />
+      <Route index element={<Home/>} />
       <Route path='/admin_account' element={<Admindata/>}/>
       <Route path='/loading' element={<LoginLoadingpage/>}/>
     
@@ -60,8 +60,8 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
          <Route path="/register" element={<Schooldetails/> }/>
-        <Route element={<DefaultLayout />}>
-          <Route index element={<ECommerce />} />
+        <Route  element={<DefaultLayout />}>
+          <Route path='/dashboard' element={<ECommerce />} />
           <Route
             path="/calendar"
             element={
