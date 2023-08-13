@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import logo from "./images/logo2.png"
+import logo from "./images/admin_panel_logo.png"
 import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
 
@@ -64,16 +64,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      //  style={{background:"#cbd5e1"}}
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidde duration-300 ease-linear bg-black dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
-           {/* <h2 style={{color:'white'}} className='text-2xl font-bold'>ERP System</h2> */}
-          <img width='90%' style={{margin:"auto"}} src={logo} alt="Logo" />
-        </NavLink>
+      <div className="flex items-center justify-between gap-2 px-4 py-3 lg:py-6.5">
+         <div style={{margin:"auto"}} className="flex items-center justify-between gap-2 px-4 py-3 lg:py-6.5" >
+         <NavLink to="/">
+          <img  className="h-16 w-22" style={{margin:"auto"}} src={logo} alt="Logo" />
+          </NavLink>
+           
+          <h2 style={{color:'white'}} className='text-2xl font-bold'>Oohr
+            <p style={{color:"rgb(235,183,71)"}}>Innovation</p>
+          </h2>
+
+         </div>
+        
 
         <button
           ref={trigger}
@@ -95,13 +103,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               fill=""
             />
           </svg>
+
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+        <nav className="mt-5 py-1 px-4 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
@@ -119,9 +128,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   return (
                     <React.Fragment>
                       <NavLink
-                        to="#"
+                        to="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '/' ||
+                          (pathname === '/dashboard' ||
                             pathname.includes('dashboard')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
@@ -185,7 +194,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           <li>
                             <NavLink
-                              to="/"
+                              to="/dashboard"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -621,7 +630,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/reception' || pathname.includes('dashboard')
+                  pathname === '/reception' || pathname.includes('reception')
                 }
               >
                 {(handleClick, open) => {
@@ -631,7 +640,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                            pathname.includes('reception')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1062,7 +1071,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/live' || pathname.includes('dashboard')
+                  pathname === '/live' || pathname.includes('live')
                 }
               >
                 {(handleClick, open) => {
@@ -1072,7 +1081,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/liveclasses' ||
-                            pathname.includes('dashboard')) &&
+                            pathname.includes('live')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1143,7 +1152,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/download' || pathname.includes('dashboard')
+                  pathname === '/download' || pathname.includes('download')
                 }
               >
                 {(handleClick, open) => {
@@ -1152,8 +1161,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === 'download' ||
+                            pathname.includes('download')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1224,17 +1233,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/tasks' || pathname.includes('dashboard')
+                  pathname === '/tasks' || pathname.includes('tasks')
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <NavLink
-                        to="#"
+                        to="/tasks"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === 'tasks' ||
+                            pathname.includes('tasks')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1305,7 +1314,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/exams' || pathname.includes('dashboard')
+                  pathname === '/exams' || pathname.includes('exams')
                 }
               >
                 {(handleClick, open) => {
@@ -1314,8 +1323,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/exams' ||
+                            pathname.includes('exams')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1408,7 +1417,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/attendance' || pathname.includes('dashboard')
+                  pathname === '/attendance' || pathname.includes('attendance')
                 }
               >
                 {(handleClick, open) => {
@@ -1417,8 +1426,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/attendance' ||
+                            pathname.includes('attendance')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1500,7 +1509,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/invoice' || pathname.includes('dashboard')
+                  pathname === '/invoice' || pathname.includes('invoice')
                 }
               >
                 {(handleClick, open) => {
@@ -1509,8 +1518,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/invoice' ||
+                            pathname.includes('invoice')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1636,7 +1645,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/library' || pathname.includes('dashboard')
+                  pathname === '/library' || pathname.includes('library')
                 }
               >
                 {(handleClick, open) => {
@@ -1645,8 +1654,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/library' ||
+                            pathname.includes('library')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1761,7 +1770,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/hostel' || pathname.includes('dashboard')
+                  pathname === '/hostel' || pathname.includes('hostel')
                 }
               >
                 {(handleClick, open) => {
@@ -1770,8 +1779,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/hostel' ||
+                            pathname.includes('hostel')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1853,7 +1862,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/transportation' || pathname.includes('dashboard')
+                  pathname === '/transportation' || pathname.includes('transportation')
                 }
               >
                 {(handleClick, open) => {
@@ -1862,8 +1871,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/transportation' ||
+                            pathname.includes('transportation')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -1945,7 +1954,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/inventories' || pathname.includes('dashboard')
+                  pathname === '/inventories' || pathname.includes('inventories')
                 }
               >
                 {(handleClick, open) => {
@@ -1954,8 +1963,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/inventories' ||
+                            pathname.includes('inventories')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -2037,7 +2046,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/cerificate' || pathname.includes('dashboard')
+                  pathname === '/cerificate' || pathname.includes('cerificate')
                 }
               >
                 {(handleClick, open) => {
@@ -2046,8 +2055,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/cerificate' ||
+                            pathname.includes('cerificate')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -2118,7 +2127,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/support' || pathname.includes('dashboard')
+                  pathname === '/support' || pathname.includes('support')
                 }
               >
                 {(handleClick, open) => {
@@ -2127,8 +2136,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/support' ||
+                            pathname.includes('support')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -2210,17 +2219,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/communicate' || pathname.includes('dashboard')
+                  pathname === '/communicate' || pathname.includes('communicate')
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <NavLink
-                        to="#"
+                        to="/communicate"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === '#' ||
-                            pathname.includes('dashboard')) &&
+                          (pathname === '/communicate' ||
+                            pathname.includes('/communicate')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -2304,7 +2313,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/others' || pathname.includes('dashboard')
+                  pathname === '/others' || pathname.includes('others')
                 }
               >
                 {(handleClick, open) => {
