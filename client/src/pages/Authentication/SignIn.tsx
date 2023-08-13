@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import {useState} from "react";
 import React from "react";
 import Cookies from 'universal-cookie';
-
+import logo from "../../assets/logo.png";
 import { ToastContainer, toast } from 'react-toastify';
 
 import axios from 'axios';
@@ -58,34 +58,44 @@ const handlesubmit=(e:React.FormEvent<HTMLFormElement>):void=>{
     admindata(email,password);
 }
 const admindata = async (email:any,password:any) => {
-  try {
-    const res = await axios.get(`http://localhost:8000/apiadmindata/${email}`);
-    const token=res.data[0];
-    const passworddata=res.data[0];
-     
-   
-     if(res.data.length==1){
-        if(passworddata.admin_password!==password){
-              notify("Please enter vaild password")
-        }else{
-          const now = new Date();
-
-          const expirationDate = new Date(now.getTime() + 30 * 24 * 60 *60* 1000); // 20 minutes
-      
-          const cookies = new Cookies();
-          cookies.set('_UID',token.user_token,{expires:expirationDate,path:'/'});
-          notify1("Login Successfully")
-          setTimeout(()=>{
-        document.location.href=`/?token=${token.user_token}`
-          },2000)
-        }
-    
+   console.log(email,password);
+     if(email===''){
+      notify("Email is required");
      }else{
-       notify("Please Enter valid email and password")
+      if(password===''){
+        notify("Password is required");
+      }else{
+        try {
+          const res = await axios.get(`http://localhost:8000/apiadmindata/${email}`);
+          const token=res.data[0];
+          const passworddata=res.data[0];
+           
+           
+           if(res.data.length==1){
+              if(passworddata.admin_password!==password){
+                    notify("Please enter vaild password")
+              }else{
+                const now = new Date();
+      
+                const expirationDate = new Date(now.getTime() + 30 * 24 * 60 *60* 1000); // 20 minutes
+            
+                const cookies = new Cookies();
+                cookies.set('_UID',token.user_token,{expires:expirationDate,path:'/'});
+                notify1("Login Successfully")
+                setTimeout(()=>{
+              document.location.href=`/dashboard?token=${token.user_token}`
+                },2000)
+              }
+          
+           }else{
+             notify("Please Enter valid email and password")
+           }
+        } catch (err) {
+          notify("Something went wrong please try again later");
+        }
+      }
      }
-  } catch (err) {
-    console.log('Error:', err);
-  }
+ 
 };
 
 
@@ -97,16 +107,15 @@ const admindata = async (email:any,password:any) => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                {/* <img className="hidden dark:block" src={Logo} alt="Logo" />
-                <img className="dark:hidden" src={LogoDark} alt="Logo" /> */}
-            <h3 className="text-2xl font-semibold text-black dark:text-white">
-            ERP System
-          </h3>
+                <img className="w-50 h-20" src={logo} alt="Logo" />
+            {/* <h3 className="text-2xl font-semibold text-black dark:text-white">
+              
+          </h3> */}
               </Link>
 
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+              Global Open Source
+For E-Learning Management
               </p>
 
               <span className="mt-15 inline-block">
@@ -238,7 +247,7 @@ const admindata = async (email:any,password:any) => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to ERP System
+                Sign In to Oohr ERP System
               </h2>
            
               <form onSubmit={handlesubmit}>
@@ -323,7 +332,7 @@ const admindata = async (email:any,password:any) => {
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -358,12 +367,12 @@ const admindata = async (email:any,password:any) => {
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
+                </button> */}
 
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{' '}
-                    <Link to="/auth/signup" className="text-primary">
+                    <Link to="/signup" className="text-primary">
                       Sign Up
                     </Link>
                   </p>
