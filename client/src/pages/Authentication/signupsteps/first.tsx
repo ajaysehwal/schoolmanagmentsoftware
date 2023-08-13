@@ -14,6 +14,8 @@ import {
 } from '@material-tailwind/react';
 
 export default function First({form, sendemail }) {
+   
+
   const [open, setOpen] = useState(false);
   const {verify,verified_complete,verifing}=useContext(AuthContext);
    console.log(verify);
@@ -21,7 +23,7 @@ export default function First({form, sendemail }) {
 
   const notify = (mess:any) =>
     toast.error(mess, {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -76,7 +78,7 @@ export default function First({form, sendemail }) {
       const data = response.data;
       console.log(data.length);
       if (data.length >= 1) {
-        notify("This email is already register you can use another email");
+        notify("Email Already Exists");
       } else {
         handleOpen();
         verified_complete();

