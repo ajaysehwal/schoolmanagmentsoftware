@@ -1,4 +1,3 @@
-// import React from 'react'
 import LMS from "./images/LMS.png";
 import Security from "./images/Security.png";
 import staffinfo from "./images/staffinfo.png"
@@ -17,7 +16,18 @@ import assignmentmanagement from "./images/assignmentmanagement.png";
 import cloud_sever from "./images/cloud_server.png";
 import libery from "./images/liberaymanagement.png"
 import transport from "./images/transportmanagement.png";
+import studentidqr from "./images/studentIDqr.png";
+import hostelmanagement from "./images/hostelmanagement.png"
+import studentpromotion from "./images/studentpromotion.png";
+import mediashare from "./images/mediashare.png";
+import eventmanagement from "./images/eventmanagement.png";
+import noticeboard from "./images/noticeboradmanagement.png";
+import multilinqualapp from "./images/MultilinqualApp.png"
+import academicmanagement from "./images/acdemicmanagement.png";
+import standardreport from "./images/StandardReportManagement.png";
+import smsgateway from "./images/smsgateway.png";
 export default function Features() {
+
 
   const data=[
     {
@@ -132,58 +142,58 @@ export default function Features() {
       link:"#"
      },
      {
-      
+      img:studentidqr,
       heading:'Student ID Card with Barcode',
       text:'Student and Mass ID card can be generated with barcode.',
       link:"#"
      },
      {
-      
+      img:hostelmanagement,
       heading:'Hostel Management',
       text:'Complete hostel management system for users to handle hostel easily.',
       link:"#"
      }, {
-      
+      img:studentpromotion,
       heading:'Student Promotion',
       text:'Privileged users Promote student from one class to another.',
       link:"#"
      }, {
-      
+      img:mediashare,
       heading:'Media Sharing(Video)',
       text:'Privileged users can share files & media to each others.',
       link:"#"
      }, {
-      
+      img:eventmanagement,
       heading:'Event Management',
       text:'You can send event notification with SMS option.',
       link:"#"
      },
      {
-      
+      img:noticeboard,
       heading:'Noticeboard Management',
       text:'Privileged users can announce notice information to other users.',
       link:"#"
      },
      {
-      
+      img:smsgateway,
       heading:'9 SMS Gateways',
       text:'Clickattel, Hajanaone, Twillion, MSG91, Textlocal, Bulk SMS, Nexmo, Smartsms, Sendpk.',
       link:"#"
      },
      {
-      
+      img:multilinqualapp,
       heading:'Multi-linqual App ',
       text:'We have translated our system in 14 different languages.',
       link:"#"
      },
      {
-      
+      img:academicmanagement,
       heading:'Academic Syllabus Management',
       text:'Teachers & Privileged users manage class syllabus.',
       link:"#"
      },
      {
-      
+      img:standardreport,
       heading:'Standard Report Management',
       text:'Advance reporting system for now integrated for the previledged users',
       link:"#"
